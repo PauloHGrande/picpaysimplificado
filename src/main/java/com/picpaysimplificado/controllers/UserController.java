@@ -15,19 +15,25 @@ import com.picpaysimplificado.domain.user.User;
 import com.picpaysimplificado.dtos.UserDTO;
 import com.picpaysimplificado.services.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController()
 @RequestMapping("/users")
+@Tag(name = "open-api-user")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	
+	@Operation(summary = "Criação de um novo Usuário", method = "POST")
 	@PostMapping
 	public ResponseEntity<User> createUser(@RequestBody UserDTO user){
 		User newUser = userService.createUser(user);
 		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 	}
 	
+	@Operation(summary = "Lista Todos os Usuário", method = "GET")
 	@GetMapping
 	public ResponseEntity<List<User>> getAllUsers() {
 		List<User> users = this.userService.getAllUsers();
