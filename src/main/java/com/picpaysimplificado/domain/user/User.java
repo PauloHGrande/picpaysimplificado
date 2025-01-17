@@ -4,16 +4,22 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
+import org.hibernate.dialect.Database;
+
+import com.picpaysimplificado.dtos.UserDTO;
+
 @Entity(name = "users")
 @Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of="id")
 @Getter
 @Setter
-@AllArgsConstructor
-@EqualsAndHashCode(of="id")
 public class User {
 
     @Id
@@ -33,4 +39,14 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserType userType;
+    
+    public User(UserDTO data) {
+    	this.firstName = data.firstName();
+    	this.lastName = data.lastName();
+    	this.document = data.document();
+    	this.balance = data.balance();
+    	this.userType = data.userType();
+    	this.email = data.email();
+    	this.password = data.password();
+    }
 }
